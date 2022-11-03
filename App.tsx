@@ -1,7 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { Provider } from "react-redux";
 import { COLORS } from "./src/constants/COLORS";
 import { AppNavigator } from "./src/navigation";
+import { store } from "./src/redux";
 
 export default function App() {
   if (false)
@@ -12,10 +14,10 @@ export default function App() {
     );
 
   return (
-    <>
+    <Provider store={store}>
       <AppNavigator />
       <StatusBar style="auto" />
-    </>
+    </Provider>
   );
 }
 

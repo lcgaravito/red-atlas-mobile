@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Platform } from "react-native";
-import { HomeScreen } from "../screens";
 import { Ionicons } from "@expo/vector-icons";
 import { BottomTabParamList } from "./BottomTabParamList";
 import { COLORS } from "../constants/COLORS";
+import ResultsNavigator from "./ResultsNavigator";
 
 const BottomTabs = createBottomTabNavigator<BottomTabParamList>();
 
@@ -23,7 +23,7 @@ const BottomTabNavigator = () => {
     >
       <BottomTabs.Screen
         name="Home"
-        component={HomeScreen}
+        component={ResultsNavigator}
         options={{
           title: "Home",
           tabBarIcon: ({ focused }) => (
