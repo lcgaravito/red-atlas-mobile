@@ -1,4 +1,11 @@
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../redux";
 import {
@@ -25,7 +32,7 @@ const MapScreen = ({
       <Text>forSale: {forSale ? "true" : "false"}</Text>
       {/* {data && <Text>data: {JSON.stringify(data)}</Text>} */}
       {data?.map((listing) => (
-        <View
+        <TouchableOpacity
           key={listing.id}
           style={{
             justifyContent: "center",
@@ -34,10 +41,13 @@ const MapScreen = ({
             borderWidth: 1,
             padding: 5,
           }}
+          onPress={() =>
+            navigation.navigate("ListingDetail", { id: listing.id })
+          }
         >
           <Text key={listing.id}>{listing.address}</Text>
           <Text key={listing.id}>{listing.price}</Text>
-        </View>
+        </TouchableOpacity>
       ))}
       <View style={{ flexDirection: "row" }}>
         <Button
