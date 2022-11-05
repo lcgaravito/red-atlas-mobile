@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../redux";
 import {
@@ -8,16 +8,37 @@ import {
 } from "../redux/slices/filtersSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ResultsStackParamList } from "../navigation";
+import { useListingsResidentialQuery } from "../services/listingsApi";
 
 const MapScreen = ({
   navigation,
 }: NativeStackScreenProps<ResultsStackParamList, "Results">) => {
   const { forLease, forSale } = useAppSelector(selectFilters);
   const dispatch = useAppDispatch();
+  const { data, isLoading, error } = useListingsResidentialQuery({});
+  if (isLoading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error {error.toString()}</Text>;
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text>forLease: {forLease ? "true" : "false"}</Text>
       <Text>forSale: {forSale ? "true" : "false"}</Text>
+      {/* {data && <Text>data: {JSON.stringify(data)}</Text>} */}
+      {data?.map((listing) => (
+        <View
+          key={listing.id}
+          style={{
+            justifyContent: "center",
+            alignSelf: "center",
+            margin: 5,
+            borderWidth: 1,
+            padding: 5,
+          }}
+        >
+          <Text key={listing.id}>{listing.address}</Text>
+          <Text key={listing.id}>{listing.price}</Text>
+        </View>
+      ))}
       <View style={{ flexDirection: "row" }}>
         <Button
           title="Toggle forLease"
@@ -36,7 +57,7 @@ const MapScreen = ({
           })
         }
       />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -44,8 +65,8 @@ export default MapScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
   },
 });

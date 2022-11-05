@@ -1,10 +1,15 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { filtersSlice } from "./slices";
+import { api } from "../services/api";
+import { customizerSlice, filtersSlice } from "./slices";
 
 const store = configureStore({
   reducer: {
     filters: filtersSlice,
+    customizer: customizerSlice,
+    [api.reducerPath]: api.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
