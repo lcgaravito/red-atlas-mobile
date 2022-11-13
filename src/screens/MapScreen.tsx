@@ -6,34 +6,48 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux";
-import {
-  selectFilters,
-  toggleForLease,
-  toggleForSale,
-} from "../redux/slices/filtersSlice";
+import { selectFilters } from "../redux/slices/filtersSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ResultsStackParamList } from "../navigation";
 import { useListingsResidentialQuery } from "../services/listingsApi";
+import { offsetPagination } from "../utilities/offsetPagination";
 
 const MapScreen = ({
   navigation,
 }: NativeStackScreenProps<ResultsStackParamList, "Results">) => {
-  const { forLease, forSale } = useAppSelector(selectFilters);
+  const { market_id, listing_sector_id } = useAppSelector(selectFilters);
+  const pagination = offsetPagination({
+    page: 1,
+    perPage: 25,
+    sortBy: undefined,
+    sortDirection: undefined,
+  });
+  const [page, setPage] = useState(1);
   const dispatch = useAppDispatch();
-  const { data, isLoading, error } = useListingsResidentialQuery({});
-  if (isLoading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error {error.toString()}</Text>;
+  const { data, isLoading, isFetching, error, originalArgs } =
+    useListingsResidentialQuery({
+      pagination,
+      page,
+    });
+  if (isLoading || isFetching) return <Text>Loading...</Text>;
+  if (error) {
+    console.log(error.data.errors);
+    console.log(originalArgs);
+    return <Text>Error {error.toString()}</Text>;
+  }
 
   return (
     <ScrollView style={styles.container}>
-      <Text>forLease: {forLease ? "true" : "false"}</Text>
-      <Text>forSale: {forSale ? "true" : "false"}</Text>
-      {/* {data && <Text>data: {JSON.stringify(data)}</Text>} */}
-      {data?.map((listing) => (
+      <Text>Page: {page}</Text>
+      <Button
+        title="Go to ListingDetail"
+        onPress={() => setPage((prev) => prev + 1)}
+      />
+      {data?.map((listing, index) => (
         <TouchableOpacity
-          key={listing.id}
+          key={index}
           style={{
             justifyContent: "center",
             alignSelf: "center",
@@ -45,28 +59,11 @@ const MapScreen = ({
             navigation.navigate("ListingDetail", { id: listing.id })
           }
         >
-          <Text key={listing.id}>{listing.address}</Text>
-          <Text key={listing.id}>{listing.price}</Text>
+          <Text>{listing.address}</Text>
+          <Text>{listing.price}</Text>
+          <Text>{listing.builtArea}</Text>
         </TouchableOpacity>
       ))}
-      <View style={{ flexDirection: "row" }}>
-        <Button
-          title="Toggle forLease"
-          onPress={() => dispatch(toggleForLease())}
-        />
-        <Button
-          title="Toggle forSale"
-          onPress={() => dispatch(toggleForSale())}
-        />
-      </View>
-      <Button
-        title="Go to ListingDetail"
-        onPress={() =>
-          navigation.navigate("ListingDetail", {
-            id: "123",
-          })
-        }
-      />
     </ScrollView>
   );
 };

@@ -2,29 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 export interface FiltersState {
-  forLease: boolean;
-  forSale: boolean;
+  market_id: number;
+  listing_sector_id: Array<number>;
 }
 
 const initialState: FiltersState = {
-  forLease: false,
-  forSale: false,
+  market_id: 1,
+  listing_sector_id: [1, 2, 3, 4],
 };
 
 export const filtersSlice = createSlice({
   name: "filters",
   initialState,
-  reducers: {
-    toggleForLease: (state) => {
-      state.forLease = !state.forLease;
-    },
-    toggleForSale: (state) => {
-      state.forSale = !state.forSale;
-    },
-  },
+  reducers: {},
 });
 
-export const { toggleForLease, toggleForSale } = filtersSlice.actions;
+export const {} = filtersSlice.actions;
 
 export const selectFilters = (state: RootState) => state.filters;
 
