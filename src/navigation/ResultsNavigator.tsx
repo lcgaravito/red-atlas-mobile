@@ -31,7 +31,17 @@ const ResultsNavigator = () => {
           ),
         })}
       />
-      <Stack.Screen name="ListingDetail" component={ListingDetailScreen} />
+      <Stack.Screen
+        name="ListingDetail"
+        component={ListingDetailScreen}
+        options={({ navigation }) => ({
+          headerTitle: () => (
+            <TouchableOpacity onPress={() => navigation.navigate("Results")}>
+              <Image style={{ width: 184, height: 41 }} source={Logotype} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 };

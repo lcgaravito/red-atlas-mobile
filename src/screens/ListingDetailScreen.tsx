@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   View,
@@ -47,6 +48,11 @@ const ListingDetailScreen = ({
     }
     return images;
   };
+
+  const onPressLink = (url: string) =>
+    Linking.canOpenURL(url).then(() => {
+      Linking.openURL(url);
+    });
 
   return (
     <ScrollView style={styles.container}>
@@ -96,7 +102,10 @@ const ListingDetailScreen = ({
           >
             <Text>LINK:</Text>
             {listing?.url ? (
-              <Button title="View Listing" onPress={() => {}} />
+              <Button
+                title="View Listing"
+                onPress={() => onPressLink(listing.url)}
+              />
             ) : null}
           </View>
         </Card>
