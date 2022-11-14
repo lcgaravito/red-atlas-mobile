@@ -6,10 +6,11 @@ import Text from "./Text";
 type ButtonProps = {
   title: string;
   onPress: () => void;
+  disabled?: boolean;
 };
-const Button = ({ title, onPress }: ButtonProps) => {
+const Button = ({ title, onPress, disabled }: ButtonProps) => {
   return (
-    <TouchableOpacity style={styles.root} onPress={onPress}>
+    <TouchableOpacity style={styles.root} onPress={onPress} disabled={disabled}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
@@ -22,6 +23,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     padding: 10,
     borderRadius: 50,
+    shadowColor: COLORS.darkGrey,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.26,
+    shadowRadius: 10,
+    elevation: 6,
   },
   text: {
     color: COLORS.white,

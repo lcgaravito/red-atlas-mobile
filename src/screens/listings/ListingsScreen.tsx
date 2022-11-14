@@ -1,21 +1,20 @@
 import {
   ActivityIndicator,
-  Button,
   FlatList,
   ListRenderItem,
   StyleSheet,
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux";
-import { selectFilters } from "../redux/slices/filtersSlice";
+import { useAppDispatch, useAppSelector } from "../../redux";
+import { selectFilters } from "../../redux/slices/filtersSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ResultsStackParamList } from "../navigation";
-import { useListingsResidentialQuery } from "../services/listingsApi";
-import Text from "../components/Text";
-import { ListingItem } from "../components";
-import { Listing } from "../types";
-import { COLORS } from "../constants";
+import { ResultsStackParamList } from "../../navigation";
+import { useListingsResidentialQuery } from "../../services/listingsApi";
+import Text from "../../components/Text";
+import { Button, ListingItem } from "../../components";
+import { Listing } from "../../types";
+import { COLORS } from "../../constants";
 
 const ListingsScreen = ({
   navigation,
@@ -61,7 +60,6 @@ const ListingsScreen = ({
             <Button
               title="Go to next page"
               onPress={() => setPage((prev) => prev + 1)}
-              color={COLORS.primary}
             />
           </View>
         }

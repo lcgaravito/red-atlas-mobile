@@ -8,12 +8,12 @@ import {
 } from "react-native";
 import React from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ResultsStackParamList } from "../navigation";
-import { useListingDetailQuery } from "../services/listingsApi";
-import { COLORS } from "../constants";
-import { Button, Card, Text } from "../components";
-import { Listing } from "../types";
-import { getNumberWithCommas } from "../utilities";
+import { ResultsStackParamList } from "../../navigation";
+import { useListingDetailQuery } from "../../services/listingsApi";
+import { COLORS } from "../../constants";
+import { Button, Card, Text } from "../../components";
+import { Listing } from "../../types";
+import { getNumberWithCommas } from "../../utilities";
 
 const ListingDetailScreen = ({
   route,
