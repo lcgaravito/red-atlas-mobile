@@ -12,9 +12,11 @@ const BottomTabNavigator = () => {
     <BottomTabs.Navigator
       initialRouteName="Home"
       screenOptions={{
+        headerShown: false,
         tabBarLabelStyle: {
           color: COLORS.primary,
           marginBottom: Platform.OS === "android" ? 5 : 0,
+          fontFamily: "AvenirBold",
         },
         tabBarStyle: {
           backgroundColor: COLORS.lightGrey,

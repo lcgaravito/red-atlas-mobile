@@ -19,6 +19,7 @@ export const responseListingAdapter = (listing: ListingBackend): Listing => ({
   active: listing.active,
   listingSector: listing.listing_sector,
   photos: listing.photos,
+  listing_picture_url: listing.listing_picture_url,
   dataSource: {
     name: listing.data_source?.name,
     logoUrl: listing.data_source?.logo_url,

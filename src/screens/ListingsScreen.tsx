@@ -1,9 +1,8 @@
 import {
   Button,
-  ScrollView,
+  FlatList,
+  ListRenderItem,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -13,67 +12,59 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ResultsStackParamList } from "../navigation";
 import { useListingsResidentialQuery } from "../services/listingsApi";
 import { offsetPagination } from "../utilities/offsetPagination";
+import Text from "../components/Text";
+import { ListingItem } from "../components";
+import { Listing } from "../types";
 
-const MapScreen = ({
+const ListingsScreen = ({
   navigation,
 }: NativeStackScreenProps<ResultsStackParamList, "Results">) => {
   const { market_id, listing_sector_id } = useAppSelector(selectFilters);
+  const [page, setPage] = useState(1);
   const pagination = offsetPagination({
-    page: 1,
+    page,
     perPage: 25,
     sortBy: undefined,
     sortDirection: undefined,
   });
-  const [page, setPage] = useState(1);
   const dispatch = useAppDispatch();
-  const { data, isLoading, isFetching, error, originalArgs } =
-    useListingsResidentialQuery({
-      pagination,
-      page,
-    });
+  const { data, isLoading, isFetching, error } = useListingsResidentialQuery({
+    pagination,
+    page,
+  });
   if (isLoading || isFetching) return <Text>Loading...</Text>;
   if (error) {
-    console.log(error.data.errors);
-    console.log(originalArgs);
-    return <Text>Error {error.toString()}</Text>;
+    console.log(error);
   }
 
+  const handleSelectItem = (id: string) => {
+    navigation.navigate("ListingDetail", { id });
+  };
+
+  const renderItem: ListRenderItem<Listing> = ({ item }) => (
+    <ListingItem item={item} onSelected={handleSelectItem} />
+  );
+
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Text>Page: {page}</Text>
       <Button
         title="Go to ListingDetail"
         onPress={() => setPage((prev) => prev + 1)}
       />
-      {data?.map((listing, index) => (
-        <TouchableOpacity
-          key={index}
-          style={{
-            justifyContent: "center",
-            alignSelf: "center",
-            margin: 5,
-            borderWidth: 1,
-            padding: 5,
-          }}
-          onPress={() =>
-            navigation.navigate("ListingDetail", { id: listing.id })
-          }
-        >
-          <Text>{listing.address}</Text>
-          <Text>{listing.price}</Text>
-          <Text>{listing.builtArea}</Text>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
+      />
+    </View>
   );
 };
 
-export default MapScreen;
+export default ListingsScreen;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
+    flex: 1,
   },
 });
