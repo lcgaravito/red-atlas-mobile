@@ -20,10 +20,15 @@ export const userSlice = createSlice({
       state.expiration_subscription_date =
         action.payload.expiration_subscription_date;
     },
+    logOut: (state) => {
+      state.token = undefined;
+      state.is_verified = undefined;
+      state.expiration_subscription_date = undefined;
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, logOut } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 
