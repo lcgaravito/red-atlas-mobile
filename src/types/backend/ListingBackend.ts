@@ -22,7 +22,8 @@ export interface ListingBackend {
   descriptionText: string;
   active: boolean;
   listing_sector: ListingSector;
-  photos: Photo[];
+  photos?: Photo[];
+  listing_picture_url: string;
   data_source: DataSourceBackend;
   listing_amenities?: AmenityBackend[];
   brokerName: string;
