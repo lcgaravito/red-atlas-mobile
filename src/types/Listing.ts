@@ -21,7 +21,8 @@ export interface Listing {
   descriptionText: string;
   active: boolean;
   listingSector: ListingSector;
-  photos: Photo[];
+  photos?: Photo[];
+  listing_picture_url: string;
   dataSource: DataSource;
   brokerName: string;
   phones: [];
