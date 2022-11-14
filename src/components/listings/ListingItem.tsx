@@ -34,7 +34,7 @@ const ListingItem = ({ item, onSelected }: ListingItemProps) => {
               alignItems: "center",
             }}
           >
-            {item.rooms && (
+            {item.rooms ? (
               <View
                 style={{
                   flexDirection: "row",
@@ -49,8 +49,8 @@ const ListingItem = ({ item, onSelected }: ListingItemProps) => {
                 />
                 <Text style={styles.paragraph}>{item.rooms}</Text>
               </View>
-            )}
-            {item.toilets && (
+            ) : null}
+            {item.toilets ? (
               <View
                 style={{
                   flexDirection: "row",
@@ -65,8 +65,8 @@ const ListingItem = ({ item, onSelected }: ListingItemProps) => {
                 />
                 <Text style={styles.paragraph}>{item.toilets}</Text>
               </View>
-            )}
-            {item.builtArea && (
+            ) : null}
+            {item.builtArea ? (
               <>
                 <Ionicons
                   style={{ marginRight: 5 }}
@@ -77,10 +77,14 @@ const ListingItem = ({ item, onSelected }: ListingItemProps) => {
                   {Number.parseInt(`${sqmToSqft(item.builtArea)}`)} sqft
                 </Text>
               </>
-            )}
+            ) : null}
           </View>
-          {item.address && <Text style={styles.paragraph}>{item.address}</Text>}
-          {item.title && <Text style={styles.paragraph}>{item.title}</Text>}
+          {item.address ? (
+            <Text style={styles.paragraph}>{item.address}</Text>
+          ) : null}
+          {item.title ? (
+            <Text style={styles.paragraph}>{item.title}</Text>
+          ) : null}
         </View>
       </Card>
     </TouchableOpacity>

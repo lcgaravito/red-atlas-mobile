@@ -1,4 +1,4 @@
-import { Listing, ListingBackend } from "../../types";
+import { FiltersBackendKey, Listing, ListingBackend } from "../../types";
 import { PaginationBackend } from "../../utilities";
 import { responseListingAdapter } from "../adapters/responseListingAdapter";
 import { api } from "../api";
@@ -7,14 +7,14 @@ const listingsApi = api.injectEndpoints({
   endpoints: (build) => ({
     listingsResidential: build.query<
       Array<Listing>,
-      { pagination: PaginationBackend; page: number }
+      { pagination: PaginationBackend }
     >({
-      query: ({ pagination, page }) => {
+      query: ({ pagination }) => {
         return {
           url: "/public/listings/",
           params: {
-            page,
-            count: 25,
+            [FiltersBackendKey.page]: pagination.page,
+            [FiltersBackendKey.count]: pagination.count,
           },
         };
       },
@@ -22,8 +22,19 @@ const listingsApi = api.injectEndpoints({
         return response.data.map((listing) => responseListingAdapter(listing));
       },
     }),
+    listingDetail: build.query<Listing, { id: string }>({
+      query: ({ id }) => {
+        return {
+          url: `/public/listings/${id}`,
+        };
+      },
+      transformResponse: (response: { data: ListingBackend }): Listing => {
+        return responseListingAdapter(response.data);
+      },
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useListingsResidentialQuery } = listingsApi;
+export const { useListingsResidentialQuery, useListingDetailQuery } =
+  listingsApi;
