@@ -1,8 +1,13 @@
 {
   "expo": {
     "name": "red-atlas-mobile",
+    "owner": "luisgaravito",
     "slug": "red-atlas-mobile",
     "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -12,7 +17,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/85a1a6c0-e1ff-4f6b-9d5e-4896b75549d4"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -24,10 +30,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.luisgaravito.redatlasmobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "85a1a6c0-e1ff-4f6b-9d5e-4896b75549d4"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
