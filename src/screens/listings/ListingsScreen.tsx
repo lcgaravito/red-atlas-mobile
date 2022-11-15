@@ -1,12 +1,14 @@
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   ListRenderItem,
+  Modal,
   StyleSheet,
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux";
+import { useAppSelector } from "../../redux";
 import { selectFilters } from "../../redux/slices/filtersSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ResultsStackParamList } from "../../navigation";
@@ -19,9 +21,9 @@ import { COLORS } from "../../constants";
 const ListingsScreen = ({
   navigation,
 }: NativeStackScreenProps<ResultsStackParamList, "Results">) => {
-  const { market_id, listing_sector_id } = useAppSelector(selectFilters);
+  const filters = useAppSelector(selectFilters);
+  const [mapView, setMapView] = useState(false);
   const [page, setPage] = useState(1);
-  const dispatch = useAppDispatch();
   const { data, isLoading, isFetching, error } = useListingsResidentialQuery({
     pagination: {
       page,
@@ -29,6 +31,7 @@ const ListingsScreen = ({
       sort_by: null,
       order: null,
     },
+    filters,
   });
   if (isLoading || isFetching)
     return (
@@ -64,6 +67,17 @@ const ListingsScreen = ({
           </View>
         }
       />
+      <Button title="Map View" onPress={() => setMapView(true)} />
+      <Modal
+        animationType="slide"
+        visible={mapView}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <Text>Title Modal</Text>
+        <Button title="List View" onPress={() => setMapView(false)} />
+      </Modal>
     </View>
   );
 };

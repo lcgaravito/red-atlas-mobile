@@ -1,3 +1,4 @@
+import { FiltersState } from "../../redux/slices/filtersSlice";
 import { FiltersBackendKey, Listing, ListingBackend } from "../../types";
 import { PaginationBackend } from "../../utilities";
 import { responseListingAdapter } from "../adapters/responseListingAdapter";
@@ -7,14 +8,15 @@ const listingsApi = api.injectEndpoints({
   endpoints: (build) => ({
     listingsResidential: build.query<
       Array<Listing>,
-      { pagination: PaginationBackend }
+      { pagination: PaginationBackend; filters: FiltersState }
     >({
-      query: ({ pagination }) => {
+      query: ({ pagination, filters }) => {
         return {
           url: "/public/listings/",
           params: {
             [FiltersBackendKey.page]: pagination.page,
             [FiltersBackendKey.count]: pagination.count,
+            ...filters,
           },
         };
       },

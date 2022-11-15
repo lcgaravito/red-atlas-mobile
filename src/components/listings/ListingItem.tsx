@@ -79,11 +79,10 @@ const ListingItem = ({ item, onSelected }: ListingItemProps) => {
               </>
             ) : null}
           </View>
-          {item.address ? (
-            <Text style={styles.paragraph}>{item.address}</Text>
-          ) : null}
           {item.title ? (
             <Text style={styles.paragraph}>{item.title}</Text>
+          ) : item.address ? (
+            <Text style={styles.paragraph}>{item.address}</Text>
           ) : null}
         </View>
       </Card>
