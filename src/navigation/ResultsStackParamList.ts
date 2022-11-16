@@ -1,4 +1,5 @@
 export type ResultsStackParamList = {
-  Results: undefined;
+  ListResults: undefined;
+  MapResults: undefined;
   ListingDetail: { id: string };
 };

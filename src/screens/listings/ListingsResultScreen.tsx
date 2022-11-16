@@ -1,10 +1,9 @@
 import {
   ActivityIndicator,
-  Alert,
   FlatList,
   ListRenderItem,
-  Modal,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useState } from "react";
@@ -15,14 +14,14 @@ import { ResultsStackParamList } from "../../navigation";
 import { useListingsResidentialQuery } from "../../services/listingsApi";
 import Text from "../../components/Text";
 import { Button, ListingItem } from "../../components";
+import { Ionicons } from "@expo/vector-icons";
 import { Listing } from "../../types";
 import { COLORS } from "../../constants";
 
 const ListingsScreen = ({
   navigation,
-}: NativeStackScreenProps<ResultsStackParamList, "Results">) => {
+}: NativeStackScreenProps<ResultsStackParamList, "ListResults">) => {
   const filters = useAppSelector(selectFilters);
-  const [mapView, setMapView] = useState(false);
   const [page, setPage] = useState(1);
   const { data, isLoading, isFetching, error } = useListingsResidentialQuery({
     pagination: {
@@ -67,17 +66,13 @@ const ListingsScreen = ({
           </View>
         }
       />
-      <Button title="Map View" onPress={() => setMapView(true)} />
-      <Modal
-        animationType="slide"
-        visible={mapView}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
+      <TouchableOpacity
+        style={styles.switchButton}
+        onPress={() => navigation.goBack()}
       >
-        <Text>Title Modal</Text>
-        <Button title="List View" onPress={() => setMapView(false)} />
-      </Modal>
+        <Ionicons style={{ marginRight: 5 }} name="map-outline" size={20} />
+        <Text style={{ fontWeight: "bold", fontSize: 20 }}>Map View</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -89,9 +84,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listFooterComponent: {
-    padding: 10,
+    padding: 20,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  switchButton: {
+    padding: 10,
+    margin: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.26,
+    shadowRadius: 10,
+    elevation: 6,
   },
 });
