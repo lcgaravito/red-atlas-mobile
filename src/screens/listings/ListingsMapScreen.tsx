@@ -45,10 +45,10 @@ const ListingsMapScreen = ({
       <MapView
         style={styles.mapStyle}
         initialRegion={{
-          latitude: 18.200178,
-          longitude: -66.664513,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitude: 18.100178,
+          longitude: -66.167603,
+          latitudeDelta: 1.12,
+          longitudeDelta: 1.15,
         }}
         zoomControlEnabled
       />
