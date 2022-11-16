@@ -14,7 +14,7 @@ import { useListingsResidentialQuery } from "../../services/listingsApi";
 import Text from "../../components/Text";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../constants";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 
 const ListingsMapScreen = ({
   navigation,
@@ -47,11 +47,42 @@ const ListingsMapScreen = ({
         initialRegion={{
           latitude: 18.100178,
           longitude: -66.167603,
-          latitudeDelta: 1.12,
-          longitudeDelta: 1.15,
+          latitudeDelta: 0.512,
+          longitudeDelta: 0.515,
         }}
-        zoomControlEnabled
-      />
+        zoomControlEnabled={true}
+        mapType="standard"
+      >
+        {[
+          {
+            id: "7de10048-70bc-493f-93fd-b6f1f1aad1bc",
+            coordinate: { latitude: 18.350345, longitude: -66.267603 },
+          },
+          {
+            id: "616efe00-dafe-4ce3-be4a-2248a04bb2c7",
+            coordinate: { latitude: 18.222017, longitude: -66.767605 },
+          },
+          {
+            id: "68eee340-6074-4278-9661-f77665fd60fc",
+            coordinate: { latitude: 18.390212, longitude: -66.367607 },
+          },
+          {
+            id: "e3ddf2da-307f-4fae-a40f-af94d5d0242d",
+            coordinate: { latitude: 18.060564, longitude: -66.967609 },
+          },
+          {
+            id: "e9544b09-efde-421d-810f-68553766e41e",
+            coordinate: { latitude: 18.230876, longitude: -66.567611 },
+          },
+        ].map(({ id, coordinate }) => (
+          <Marker
+            key={id}
+            title="Ubicación de prueba"
+            coordinate={coordinate}
+            onPress={() => navigation.navigate("ListingDetail", { id })}
+          />
+        ))}
+      </MapView>
       <TouchableOpacity
         style={styles.switchButton}
         onPress={() => navigation.navigate("ListResults")}
@@ -70,8 +101,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mapStyle: {
-    width: Dimensions.get("screen").width,
-    height: Dimensions.get("screen").height,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
   listFooterComponent: {
     padding: 10,

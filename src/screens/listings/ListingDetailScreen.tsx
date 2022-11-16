@@ -33,8 +33,8 @@ const ListingDetailScreen = ({
 
   if (isLoading || isFetching)
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="small" color={COLORS.primary} />
+      <View style={styles.containerLoading}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
       </View>
     );
 
@@ -119,6 +119,11 @@ export default ListingDetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  containerLoading: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   imagesContainer: {
     flexDirection: "row",

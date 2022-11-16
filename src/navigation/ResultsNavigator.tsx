@@ -30,7 +30,9 @@ const ResultsNavigator = () => {
           component={ListingsMapScreen}
           options={({ navigation }) => ({
             headerTitle: () => (
-              <TouchableOpacity onPress={() => navigation.navigate("Results")}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("MapResults")}
+              >
                 <Image style={{ width: 211, height: 47 }} source={Logotype} />
               </TouchableOpacity>
             ),
@@ -41,7 +43,22 @@ const ResultsNavigator = () => {
           component={ListingDetailScreen}
           options={({ navigation }) => ({
             headerTitle: () => (
-              <TouchableOpacity onPress={() => navigation.navigate("Results")}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("MapResults")}
+              >
+                <Image style={{ width: 184, height: 41 }} source={Logotype} />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="ListResults"
+          component={ListingsResultScreen}
+          options={({ navigation }) => ({
+            headerTitle: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("MapResults")}
+              >
                 <Image style={{ width: 184, height: 41 }} source={Logotype} />
               </TouchableOpacity>
             ),
@@ -49,17 +66,17 @@ const ResultsNavigator = () => {
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="ListResults"
           component={ListingsResultScreen}
           options={({ navigation }) => ({
             headerTitle: () => (
-              <TouchableOpacity onPress={() => navigation.navigate("Results")}>
+              <TouchableOpacity onPress={() => navigation.navigate("MapResults")}>
                 <Image style={{ width: 184, height: 41 }} source={Logotype} />
               </TouchableOpacity>
             ),
           })}
-        />
+        /> */}
       </Stack.Group>
     </Stack.Navigator>
   );
